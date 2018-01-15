@@ -1,0 +1,17 @@
+td {
+    width : 100px;
+    background-color: aliceblue;
+}
+
+tr {
+    height : 100px;
+}
+
+.container {
+    width: 100%;
+}
+
+.grid {
+    margin: auto;
+}
+
