@@ -11,11 +11,18 @@ tr {
     height : 100px;
 }
 
-.container {
+.wrapper {
     width: 100%;
 }
 
-.grid {
-    margin: auto;
+.container {
+    margin: 0 auto;
+    width : 500px;
+}
+.win-screen {
+    display: none;
 }
 
+* {
+    box-sizing: border-box;
+}

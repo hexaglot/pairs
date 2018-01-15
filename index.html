@@ -9,9 +9,16 @@
 </head>
 
 <body>
-    <div class="container">
-        <table id="game-grid" class="grid">
-        </table>
+    <div class="wrapper">
+        <div class="container">
+            <div class="score"><span>Score : </span> <span id="score"></span></div>
+            <table id="game-grid" class="grid">
+            </table>
+            <div class="win-screen">
+                Congratulations you win!
+                <button id="restart-btn">restart</button>
+            </div>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
         crossorigin="anonymous"></script>
