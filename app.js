@@ -7,6 +7,10 @@ function shuffle(a) {
     }
 }
 
+//cards can be in two states - flpped not flipped
+//they can also be in two other states in-play or complete
+//user interacts in two ways - picking either first card, or second card
+
 $(document).ready(function () {
     //on load 
     const width = 4;
@@ -34,7 +38,6 @@ $(document).ready(function () {
 
             for (let col = 0; col < width; col += 1) {
                 const src = "img/" + tiles[cell] + ".svg";
-                const img = $('<img class="" src="' + src + '" alt="g">');
                 const td = $('<td></td>');
 
 
@@ -44,6 +47,7 @@ $(document).ready(function () {
                         <div class="back"><img src="' + src + '" alt=""></div>\
                         </div>\
                     </div>');
+
                 td.append(flipper_container);
 
                 td.on('click', { cell: cell }, function (e) {
@@ -55,6 +59,7 @@ $(document).ready(function () {
                         first = flipper_container;
                         first_cell = this_cell;
                         move_tally += 1;
+                        //second choice
                     } else {
                         if (flipper_container !== first) {
                             flipper_container.addClass('flip');
@@ -70,26 +75,31 @@ $(document).ready(function () {
                                     grid.hide();
                                     $('.win-screen').show();
                                 }
+                                //second choice wasnt the same tile as first, show both quickly, then flip back
                             } else {
-                                window.setTimeout(function () {
-                                    first.removeClass('flip');
-                                    first = undefined;
-                                    first_cell = undefined;
-                                    flipper_container.removeClass('flip');
-                                }, 1000);
-                            }
+                                var f = function () {
+                                    var a = first;
+                                    var b = flipper_container;
+                                    a.removeClass('flip');
+                                    b.removeClass('flip');
 
+                                };
+                                window.setTimeout(f, 1000);
+                                first = undefined;
+                                first_cell = undefined;
+                            };
                         }
-
                     }
-                    $('#score').text(move_tally);
-                })
+                });
+                $('#score').text(move_tally);
+
                 tr.append(td);
                 cell += 1;
             }
             grid.append(tr);
         }
-    }
+    };
+
 
     init_game();
 
@@ -99,6 +109,4 @@ $(document).ready(function () {
         grid.show();
 
     });
-
-
-})
+});

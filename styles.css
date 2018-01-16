@@ -72,3 +72,7 @@ tr {
 	transform: rotateY(-180deg);
 }
 
+.flip-container.flipback .flipper {
+	transform: rotateY(-180deg);
+}
+
