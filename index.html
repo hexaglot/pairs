@@ -11,16 +11,22 @@
 <body>
     <div class="wrapper">
         <div class="container">
-            <div class="score"><span>Score : </span> <span id="score"></span></div>
-            <table id="game-grid" class="grid">
-            </table>
+            <div class="game-screen">
+                <div class="score"><span>Score: </span> <span id="score"></span></div>
+                <div class="timer"><span>Timer: </span><span id="timer"></span></div>
+                <table id="game-grid" class="grid">
+                </table>
+            </div>
             <div class="win-screen">
                 Congratulations you win!
                 <button id="restart-btn">restart</button>
+                <div class="score"><span id="final-score"></span></div>
+                <div class="time"><span id="final-time"></span></div>
             </div>
         </div>
     </div>
     <script src="jquery-3.2.1.js"></script>
-        <script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
+
 </html>
