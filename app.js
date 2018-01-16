@@ -36,20 +36,28 @@ $(document).ready(function () {
                 const src = "img/" + tiles[cell] + ".svg";
                 const img = $('<img class="" src="' + src + '" alt="g">');
                 const td = $('<td></td>');
-                img.hide()
-                td.append(img);
+
+
+                const flipper_container = $('<div class="flip-container">\
+                    <div class="flipper">\
+                    <div class="front"><img src="img/star.svg" alt=""></div>\
+                        <div class="back"><img src="' + src + '" alt=""></div>\
+                        </div>\
+                    </div>');
+                td.append(flipper_container);
 
                 td.on('click', { cell: cell }, function (e) {
                     const this_cell = e.data.cell;
                     console.log(move_tally);
+                    //first choice
                     if (first === undefined) {
-                        img.show();
-                        first = img;
+                        flipper_container.addClass('flip');
+                        first = flipper_container;
                         first_cell = this_cell;
                         move_tally += 1;
                     } else {
-                        if (img !== first) {
-                            img.show();
+                        if (flipper_container !== first) {
+                            flipper_container.addClass('flip');
                             move_tally += 1;
                             if (tiles[this_cell] === tiles[first_cell]) {
                                 console.log('pair found!');
@@ -64,10 +72,10 @@ $(document).ready(function () {
                                 }
                             } else {
                                 window.setTimeout(function () {
-                                    first.hide();
+                                    first.removeClass('flip');
                                     first = undefined;
                                     first_cell = undefined;
-                                    img.hide();
+                                    flipper_container.removeClass('flip');
                                 }, 1000);
                             }
 
