@@ -30,10 +30,33 @@ $(document).ready(function () {
         let move_tally = 0;
         let pairs_found = 0;
         let time = 0;
+        let stars =0;
 
         grid.find('*').remove();
         $('#score').text(move_tally);
         $('#timer').text(time);
+
+        function render_stars(stars) {
+            const star_hollow = '\u2606';
+            const star_filled = '\u2605';
+            $('.stars').text(star_filled.repeat(stars) + star_hollow.repeat(3 - stars));
+        }
+
+        function update_stars() {
+            //to get three stars you need a score of 16 - perfect
+            //to get two stars you need to complete it in 24 moves,
+            //anything else is one star
+            if (move_tally <= 16) {
+                stars = 3;
+            } else if (move_tally <= 24) {
+                stars = 2;
+            } else {
+                stars = 1;
+            }
+        }
+
+        update_stars();
+        render_stars(stars);
 
         let cell = 0;
         for (let row = 0; row < width; row += 1) {
@@ -61,12 +84,16 @@ $(document).ready(function () {
                             flipper_container.addClass('flip');
                             move_tally += 1;
                             $('#score').text(move_tally);
+                            update_stars();
+                            render_stars(stars);
                             first = flipper_container;
                             first_cell = this_cell;
                             //second choice
                         } else if (first != undefined) {
                             move_tally += 1;
                             $('#score').text(move_tally);
+                            update_stars();
+                            render_stars(stars);
 
                             if (tiles[this_cell] === tiles[first_cell]) {
                                 //user clicked on same time twice
@@ -111,7 +138,7 @@ $(document).ready(function () {
             grid.append(tr);
         }
 
-        const timer_id = window.setInterval(function() {
+        const timer_id = window.setInterval(function () {
             time += 1;
             $('#timer').text(time);
         }, 1000);
