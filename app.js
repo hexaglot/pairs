@@ -30,7 +30,7 @@ $(document).ready(function () {
         let move_tally = 0;
         let pairs_found = 0;
         let time = 0;
-        let stars =0;
+        let stars = 0;
 
         grid.find('*').remove();
         $('#score').text(move_tally);
@@ -78,57 +78,49 @@ $(document).ready(function () {
                 td.on('click', { cell: cell }, function (e) {
 
                     const this_cell = e.data.cell;
-                    //first choice
-                    if (!flipper_container.hasClass('flip')) {
-                        if (first === undefined) {
-                            flipper_container.addClass('flip');
-                            move_tally += 1;
-                            $('#score').text(move_tally);
-                            update_stars();
-                            render_stars(stars);
-                            first = flipper_container;
-                            first_cell = this_cell;
-                            //second choice
-                        } else if (first != undefined) {
-                            move_tally += 1;
-                            $('#score').text(move_tally);
-                            update_stars();
-                            render_stars(stars);
-
-                            if (tiles[this_cell] === tiles[first_cell]) {
-                                //user clicked on same time twice
-                                flipper_container.addClass('flip');
-                                first = undefined;
-                                first_cell = undefined;
-                                pairs_found += 1;
-                                if (pairs_found === 8) {
-                                    console.log("You win!");
-                                    $('#final-score').text(move_tally);
-                                    clearInterval(timer_id);
-                                    $('#final-time').text(time);
-                                    $('.game-screen').hide();
-                                    $('.win-screen').show();
-                                }
-                            } else {
-                                //user clicked on different tiles
-                                flipper_container.addClass('flip');
-                                //first choice matches second
-                                if (first_cell === this_cell) {
-                                    console.log('found pair!')
-                                    //first choice doesnt match second
-                                } else {
-                                    setTimeout(function (f) {
-                                        flipper_container.removeClass('flip');
-                                        f.removeClass('flip');
-
-                                    }, 1000, first);
-                                    first = undefined;
-                                    first_cell = undefined;
-                                }
-                            }
-
-                        }
+                    //don't do anything if card already flipped
+                    if (flipper_container.hasClass('flip')) {
+                        return;
                     }
+
+                    flipper_container.addClass('flip');
+                    if (first === undefined) {
+                        //first choice
+                        first = flipper_container;
+                        first_cell = this_cell;
+                    } else if (first != undefined) {
+                        //second choice
+                        if (tiles[this_cell] === tiles[first_cell]) {
+                            //match found
+                            //                        first = undefined;
+                            //                      first_cell = undefined;
+                            pairs_found += 1;
+                            //check if we have won
+                            if (pairs_found === 8) {
+                                console.log("You win!");
+                                $('#final-score').text(move_tally);
+                                //stop the timer
+                                clearInterval(timer_id);
+                                $('#final-time').text(time);
+                                $('.game-screen').hide();
+                                $('.win-screen').show();
+                            }
+                        } else {
+                            //no match found
+                            setTimeout(function (f) {
+                                flipper_container.removeClass('flip');
+                                f.removeClass('flip');
+
+                            }, 1000, first);
+                        }
+                        first = undefined;
+                        first_cell = undefined;
+
+                    }
+                    move_tally += 1;
+                    $('#score').text(move_tally);
+                    update_stars();
+                    render_stars(stars);
                 });
 
                 tr.append(td);
