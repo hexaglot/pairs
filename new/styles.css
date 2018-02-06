@@ -1,0 +1,153 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	background-color: #bff4e8;
+	color : #5f6e6c;
+	font-size : 2rem;
+	font-family: 'Changa One', cursive;
+}
+
+body.gameover .win-screen{
+	display : initial;
+}
+
+body.gameover .game-screen {
+	display : none;
+}
+
+/*This contains the game screen and the win screen, only one is shown at a time*/
+.container {
+    width: 95vmin;
+    height: 95vmin;
+    margin: 0 auto;
+    font-size: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.win-screen {
+    display: none;
+	text-align: center;
+}
+
+.win-screen p {
+	margin: 0;
+}
+
+/*We need to explitly set this height for grid to be responsive*/
+.game-screen {
+    width: 95vmin;
+    height: 95vmin;
+}
+
+.game-screen .hud {
+	display : flex;
+	justify-content: space-between;
+	width : 90%;
+	margin:  0 auto;
+}
+
+.grid {
+	margin : 0 auto;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(4,1fr);
+	grid-gap: 2vmin;
+	align-items: stretch;
+	width: 90%;
+	height: 90%;
+	padding: 2vmin;
+	background-color: #8ee3d0;
+	border-radius: 3vmin;
+}
+
+.card-container {
+	perspective:800px;
+	height: 100%;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  transform-origin: right center;
+}
+
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+	flex: 1;
+	width: 100%;
+	height: 100%;
+	background-color: #64ceb6;
+	background-size: 90% 90%;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 1vmin;
+}
+
+.front {
+	transform: rotateY(0deg);
+}
+
+.back {
+	transform: rotateY(180deg);
+}
+
+.card-container:hover .card .front{
+	transition: box-shadow 0.2s;
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.card-container.flipped .card {
+	transform: translateX( -100% ) rotateY(-180deg);
+}
+
+.card-container.correct .card .back {
+	animation-name: flash;
+	animation-iteration-count: 4;
+	animation-duration: 0.4s;
+	animation-timing-function: linear;
+	animation-delay: 0.2s;
+	animation-direction: alternate;
+}
+
+.restart.button {
+	background-color: inherit;
+	font-size : inherit;
+	font-family: inherit;
+	color : #5f6e6c;
+	fill-color : #5f6e6c;
+	border : none;
+}
+
+.restart.button:hover {
+	filter: brightness(125%);
+}
+
+.refresh {
+	width : 1.5rem;
+	fill: currentColor;
+}
+
+.card-a {background-image: url(img/a.svg);}
+.card-b {background-image: url(img/b.svg);}
+.card-c {background-image: url(img/c.svg);}
+.card-d {background-image: url(img/d.svg);}
+.card-e {background-image: url(img/e.svg);}
+.card-f {background-image: url(img/f.svg);}
+.card-g {background-image: url(img/g.svg);}
+.card-h {background-image: url(img/h.svg);}
+
+@keyframes flash {
+	to {
+		filter : brightness(115%);
+	}
+}

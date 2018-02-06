@@ -1,31 +1,28 @@
-td {
-    width : 100px;
-    background-color: aliceblue;
+* {
     box-sizing: border-box;
+}
+
+.grid {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    /* width : 100px; */
     height: 100px;
+    background-color: aliceblue;
     padding: 0px;
     margin: 0px;
     vertical-align : top;
 }
 
-tr {
-    height : 100px;
-}
-
 .wrapper {
-    width: 100%;
+    margin: 0 auto;
+    max-width : 500px;
 }
 
-.container {
-    margin: 0 auto;
-    width : 500px;
-}
 .win-screen {
     display: none;
-}
-
-* {
-    box-sizing: border-box;
 }
 
 .flip-container, .front, .back {

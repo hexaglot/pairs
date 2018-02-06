@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pairs Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Changa+One" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="game-screen">
+            <div class="hud">
+                <span>Score: <span class="score"></span> </span>
+                <span>Time: <span class="timer"></span> </span>
+                <span class="stars">&starf;&starf;&starf;</span>
+                <button class="restart button"><svg class="refresh" viewBox="0 0 100 100">
+                <path d="M54.876 4.876A45.124 45.124 0 0 0 11.22 38.72H0l22.562 22.562 22.56-22.562H35.36a22.562 22.562 0 0 1 19.516-11.28 22.562 22.562 0 0 1 22.562 22.56 22.562 22.562 0 0 1-21.813 22.536l-12.148 21.04a45.124 45.124 0 0 0 11.4 1.549A45.124 45.124 0 0 0 100 50 45.124 45.124 0 0 0 54.876 4.876z"/></svg>
+                </button>
+            </div>
+            <div id="game-grid" class="grid">
+            </div>
+        </div>
+        <div class="win-screen">
+            <p>Congratulations you win!</p>
+            <p><span>Final Score </span> <span class="score"></span></p>
+            <p><span>Time </span><span class="timer"></span></p>
+            <p><span class="stars"></span></p>
+            <button class="restart button">Play Again</button>
+        </div>
+    </div>
+    <script src="jquery-3.2.1.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
