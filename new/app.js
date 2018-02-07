@@ -115,13 +115,11 @@
         $grid.find('*').remove();
         deck.forEach(function (value) {
             const $card_container = $('<div class="card-container"></div>');
-
-            $card_container.on('click', { $card: $card_container, value: value }, card_click);
-
             const $card = $('<div class="card"></div>');
             const $front = $('<div class="front"></div>');
             const $back = $('<div class="back card-' + value + '"></div>');
 
+            $card_container.on('click', { $card: $card_container, value: value }, card_click);
             $grid.append($card_container.append($card.append($front, $back)));
         })
 
