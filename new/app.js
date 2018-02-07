@@ -1,5 +1,4 @@
 (function () {
-
     //the DOM elements we need
     //game screen
     const $grid = $('#game-grid');
@@ -10,7 +9,7 @@
     const $final_score = $('#final-score');
     const $final_time = $('#final-time');
     //both
-    const $body = $('body');
+    const $pairs_container = $('.pairs-container');
     //there are two restart buttons
     const $restart_buttons = $('.restart');
 
@@ -48,8 +47,8 @@
         $stars.text(star_filled.repeat(state.stars) + star_hollow.repeat(3 - state.stars));
     }
 
-    function card_click(e) {
-        const current = e.data;
+    function card_click(event) {
+        const current = event.data;
         //don't do anything if card already flipped or if
         //cards are still shown which can be confusing to player
         if (!state.clicks_allowed || current.$card.hasClass('flipped')) {
@@ -76,17 +75,18 @@
                     //stop the timer
                     state.timer.running = false;
                     $final_time.text(state.timer.time);
-                    //TODO: change to a container div
-                    $body.addClass('gameover');
+                    $('.page').addClass('hidden');
+                    $('.win-screen.page').removeClass('hidden')
                 }
             } else {
-
                 //no match found
                 state.clicks_allowed = false;
+                $pairs_container.removeClass('clicks-allowed');
                 setTimeout(function ($first_card) {
                     current.$card.removeClass('flipped');
                     $first_card.removeClass('flipped');
                     state.clicks_allowed = true;
+                    $pairs_container.addClass('clicks-allowed');
                 }, 1000, state.first.$card);
             }
             state.first = null;
@@ -97,7 +97,6 @@
 
         state = {
             first : null, //{$card : , value : }
-            first: null,
             move_tally: 0,
             pairs_found_tally: 0,
             total_pairs : null,
@@ -109,9 +108,9 @@
         const card_values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
         let deck = card_values.concat(card_values);
         state.total_pairs = deck.length / 2;
-        shuffle(deck);
+        //shuffle(deck);
         
-        //clear the game grid and refill
+       //clear the game grid and refill
         $grid.find('*').remove();
         deck.forEach(function (value) {
             const $card_container = $('<div class="card-container"></div>');
@@ -119,7 +118,7 @@
             const $front = $('<div class="front"></div>');
             const $back = $('<div class="back card-' + value + '"></div>');
 
-            $card_container.on('click', { $card: $card_container, value: value }, card_click);
+            $card.on('click', { $card: $card, value: value }, card_click);
             $grid.append($card_container.append($card.append($front, $back)));
         })
 
@@ -133,7 +132,8 @@
         //install the resart button handler
         $restart_buttons.on('click', function () {
             init_game();
-            $body.removeClass('gameover');
+            $('.page').addClass('hidden');
+            $('.game-screen.page').removeClass('hidden');
         });
 
         //install the timer function

@@ -11,16 +11,8 @@ body {
 	font-family: 'Changa One', cursive;
 }
 
-body.gameover .win-screen{
-	display : initial;
-}
-
-body.gameover .game-screen {
-	display : none;
-}
-
 /*This contains the game screen and the win screen, only one is shown at a time*/
-.container {
+.pairs-container {
     width: 95vmin;
     height: 95vmin;
     margin: 0 auto;
@@ -30,8 +22,11 @@ body.gameover .game-screen {
     justify-content: center;
 }
 
-.win-screen {
-    display: none;
+.page.hidden {
+	display : none;
+}
+
+.page {
 	text-align: center;
 }
 
@@ -101,21 +96,22 @@ body.gameover .game-screen {
 	transform: rotateY(180deg);
 }
 
-.card-container:hover .card .front{
+/*Indicate that the player can flip the card under the mouse*/
+.clicks-allowed .card:hover .front{
 	transition: box-shadow 0.2s;
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
 }
 
-.card-container.flipped .card {
+.card.flipped {
 	transform: translateX( -100% ) rotateY(-180deg);
 }
 
-.card-container.correct .card .back {
+.card.correct .back {
 	animation-name: flash;
-	animation-iteration-count: 4;
-	animation-duration: 0.4s;
+	animation-iteration-count: 5;
+	animation-duration: 0.2s;
 	animation-timing-function: linear;
-	animation-delay: 0.2s;
+	animation-delay: 0.5s;
 	animation-direction: alternate;
 }
 

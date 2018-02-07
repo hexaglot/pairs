@@ -10,8 +10,12 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="game-screen">
+    <div class="pairs-container clicks-allowed">
+        <div class="intro page">
+            <p>Flip over all the pairs to win</p>
+            <button class="restart button">Start Game</button>
+        </div>
+        <div class="game-screen page hidden">
             <div class="hud">
                 <span>Score: <span class="score"></span> </span>
                 <span>Time: <span class="timer"></span> </span>
@@ -23,7 +27,7 @@
             <div id="game-grid" class="grid">
             </div>
         </div>
-        <div class="win-screen">
+        <div class="win-screen page hidden">
             <p>Congratulations you win!</p>
             <p><span>Final Score </span> <span class="score"></span></p>
             <p><span>Time </span><span class="timer"></span></p>
