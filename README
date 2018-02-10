@@ -1,1 +1,11 @@
-A game of pairs in HTML, CSS, Javascript.
+An implementation of the card game concentration.
+
+The graphics were taken from <a href="http://www.freepik.com">Designed by Freepik</a>
+
+
+Todo: 
+    - clean up the css
+    - Delete uneeded files
+    - write a proper README
+    - add to github
+    - submit

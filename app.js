@@ -1,137 +1,166 @@
-$(document).ready(function () {
-    //on load 
-    const width = 4;
-    const images = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+(function () {
+    //the DOM elements we need
+    //game screen
+    const $grid = $('#game-grid');
+    const $stars = $('.stars');
+    const $score = $('.score');
+    const $timer = $('.time');
+    //win screen
+    const $final_score = $('.final-score');
+    const $final_time = $('.final-time');
+    const $final_stars = $('.final-stars');
+    //both
+    const $pairs_container = $('.pairs-container');
+    //there are two restart buttons
+    const $restart_buttons = $('.restart');
+    //pages
+    const $all_pages = $('.page');
+    const $win_screen = $('.win-screen.page');
+    const $game_screen = $('.game-screen.page');
 
-    const grid = $('#game-grid');
+
+    //this will hold all game state, initialised later
+    let state = {};
+
+    function shuffle(a) {
+        for (let i = a.length - 1; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    }
+
+    function render_game() {
+        //update the game hud. Timer is updated here and in the timeout function for simplicity
+        $score.text(state.move_tally);
+        $timer.text(state.timer.time);
+
+        //to get three stars you need a score of 16 - perfect
+        //to get two stars you need to complete it in 24 moves,
+        //anything else is one star
+        if (state.move_tally <= 16) {
+            state.stars = 3;
+        } else if (state.move_tally <= 24) {
+            state.stars = 2;
+        } else {
+            state.stars = 1;
+        }
+
+        const star_hollow = '\u2606';
+        const star_filled = '\u2605';
+
+        state.stars_string = star_filled.repeat(state.stars) + star_hollow.repeat(3 - state.stars);
+
+        $stars.text(state.stars_string);
+    }
+
+    function card_click(event) {
+        const current = event.data;
+        //don't do anything if card already flipped or if
+        //cards are still shown which can be confusing to player
+        if (!state.clicks_allowed || current.$card.hasClass('flipped')) {
+            return;
+        }
+
+        current.$card.addClass('flipped');
+        state.move_tally += 1;
+        render_game();
+
+        if (!state.first) {
+            //first choice
+            state.first = current;
+        } else {
+            //second choice
+            if (current.value === state.first.value) {
+                //match found
+                state.pairs_found_tally += 1;
+                current.$card.addClass('correct');
+                state.first.$card.addClass('correct');
+                //check if we have won
+                if (state.pairs_found_tally === state.total_pairs) {
+                    $final_score.text(state.move_tally);
+                    //stop the timer
+                    state.timer.running = false;
+                    $final_time.text(state.timer.time);
+                    $final_stars.text(state.stars_string);
+                    $all_pages.addClass('hidden');
+                    $win_screen.removeClass('hidden')
+                }
+            } else {
+                //no match found
+                state.clicks_allowed = false;
+                $pairs_container.removeClass('clicks-allowed');
+                setTimeout(function ($first_card) {
+                    current.$card.removeClass('flipped');
+                    $first_card.removeClass('flipped');
+                    state.clicks_allowed = true;
+                    $pairs_container.addClass('clicks-allowed');
+                }, 1000, state.first.$card);
+            }
+            state.first = null;
+        }
+    };
 
     var init_game = function () {
 
-        let state = {
-            // first : {card : undefined, value : undefined},
-            first: undefined,
-            tiles: images.concat(images),
+        state = {
+            first: null, //{$card : , value : }
             move_tally: 0,
-            pairs_found: 0,
-            time: 0,
-            stars: 0
+            pairs_found_tally: 0,
+            total_pairs: null,
+            timer: { time: 0, running: true },
+            stars: 0,
+            stars_string: "",
+            clicks_allowed: true
         };
 
-        function shuffle(a) {
-            for (let i = a.length - 1; i > 0; i -= 1) {
-                const j = Math.floor(Math.random() * (i + 1));
-                const temp = a[i];
-                a[i] = a[j];
-                a[j] = temp;
-            }
-        }
+        const card_values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+        let deck = card_values.concat(card_values);
+        state.total_pairs = deck.length / 2;
+        shuffle(deck);
 
-        //shuffle(state.tiles);
+        //clear the game grid and refill
+        $grid.find('*').remove();
+        deck.forEach(function (value) {
+            const $card_container = $('<div class="card-container"></div>');
+            const $card = $('<div class="card"></div>');
+            const $front = $('<div class="front"></div>');
+            const $back = $('<div class="back card-' + value + '"></div>');
 
+            $card.on('click', { $card: $card, value: value }, card_click);
+            $grid.append($card_container.append($card.append($front, $back)));
+        })
 
-        grid.find('*').remove();
-        $('#score').text(state.move_tally);
-        $('#timer').text(state.time);
-
-        function render_stars(stars) {
-            const star_hollow = '\u2606';
-            const star_filled = '\u2605';
-            $('.stars').text(star_filled.repeat(state.stars) + star_hollow.repeat(3 - state.stars));
-        }
-
-        function update_stars() {
-            //to get three stars you need a score of 16 - perfect
-            //to get two stars you need to complete it in 24 moves,
-            //anything else is one star
-            if (state.move_tally <= 16) {
-                state.stars = 3;
-            } else if (state.move_tally <= 24) {
-                state.stars = 2;
-            } else {
-                state.stars = 1;
-            }
-        }
-
-        update_stars();
-        render_stars(state.stars);
-
-        function card_click(e) {
-            const current = e.data;
-            //don't do anything if card already flipped
-            if (current.card.hasClass('flip')) {
-                return;
-            }
-
-            current.card.addClass('flip');
-            state.move_tally += 1;
-            $('#score').text(state.move_tally);
-            update_stars();
-            render_stars(state.stars);
-
-            if (state.first === undefined) {
-                //first choice
-                state.first = current;
-            } else if (state.first != undefined) {
-                //second choice
-                if (state.tiles[current.value] === state.tiles[state.first.value]) {
-                    //match found
-                    state.pairs_found += 1;
-                    //check if we have won
-                    if (state.pairs_found === 8) {
-                        $('#final-score').text(state.move_tally);
-                        //stop the timer
-                        clearInterval(timer_id);
-                        $('#final-time').text(state.time);
-                        $('.game-screen').hide();
-                        $('.win-screen').show();
-                    }
-                } else {
-                    //no match found
-                    setTimeout(function (f) {
-                        current.card.removeClass('flip');
-                        f.removeClass('flip');
-
-                    }, 1000, state.first.card);
-                }
-                state.first = undefined;
-            }
-        };
-
-        let cell = 0;
-        for (let row = 0; row < width; row += 1) {
-            const tr = $('<tr></tr>');
-
-            for (let col = 0; col < width; col += 1) {
-                const src = "img/" + state.tiles[cell] + ".svg";
-                const td = $('<td></td>');
-
-                const flipper_container = $('<div class="flip-container">\
-                    <div class="flipper">\
-                    <div class="front"><img src="img/star.svg" alt=""></div>\
-                        <div class="back"><img src="' + src + '" alt=""></div>\
-                        </div>\
-                    </div>');
-
-                td.append(flipper_container);
-                td.on('click', { card: flipper_container, value: cell }, card_click);
-                tr.append(td);
-                cell += 1;
-            }
-            grid.append(tr);
-        }
-
-        const timer_id = window.setInterval(function () {
-            state.time += 1;
-            $('#timer').text(state.time);
-        }, 1000);
+        render_game();
     };
 
-    init_game();
-
-    $('#restart-btn').on('click', function () {
+    $(document).ready(function () {
+        //on load
         init_game();
-        $('.win-screen').hide();
-        $('.game-screen').show();
 
+        //install the resart button handler
+        $restart_buttons.on('click', function () {
+            init_game();
+            $all_pages.addClass('hidden');
+            $game_screen.removeClass('hidden');
+        });
+        
+        //install the flip function for the sample cards in the intro-screen
+        $('.sample-card .card').on('click', function () {
+            $(this).toggleClass('flipped');
+        });
+
+        //install the timer function
+        window.setInterval(function () {
+            //only update if the timer is set to running
+            if (state.timer.running) {
+                state.timer.time += 1;
+            }
+            $timer.text(state.timer.time);
+        }, 1000);
     });
-});
+
+}());
+
+
