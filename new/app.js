@@ -118,7 +118,7 @@
         const card_values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
         let deck = card_values.concat(card_values);
         state.total_pairs = deck.length / 2;
-        //shuffle(deck);
+        shuffle(deck);
 
         //clear the game grid and refill
         $grid.find('*').remove();
@@ -145,7 +145,8 @@
             $all_pages.addClass('hidden');
             $game_screen.removeClass('hidden');
         });
-
+        
+        //install the flip function for the sample cards in the intro-screen
         $('.sample-card .card').on('click', function () {
             $(this).toggleClass('flipped');
         });
