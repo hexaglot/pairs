@@ -4,14 +4,20 @@
     const $grid = $('#game-grid');
     const $stars = $('.stars');
     const $score = $('.score');
-    const $timer = $('.timer');
+    const $timer = $('.time');
     //win screen
-    const $final_score = $('#final-score');
-    const $final_time = $('#final-time');
+    const $final_score = $('.final-score');
+    const $final_time = $('.final-time');
+    const $final_stars = $('.final-stars');
     //both
     const $pairs_container = $('.pairs-container');
     //there are two restart buttons
     const $restart_buttons = $('.restart');
+    //pages
+    const $all_pages = $('.page');
+    const $win_screen = $('.win-screen.page');
+    const $game_screen = $('.game-screen.page');
+
 
     //this will hold all game state, initialised later
     let state = {};
@@ -44,7 +50,9 @@
         const star_hollow = '\u2606';
         const star_filled = '\u2605';
 
-        $stars.text(star_filled.repeat(state.stars) + star_hollow.repeat(3 - state.stars));
+        state.stars_string = star_filled.repeat(state.stars) + star_hollow.repeat(3 - state.stars);
+
+        $stars.text(state.stars_string);
     }
 
     function card_click(event) {
@@ -75,8 +83,9 @@
                     //stop the timer
                     state.timer.running = false;
                     $final_time.text(state.timer.time);
-                    $('.page').addClass('hidden');
-                    $('.win-screen.page').removeClass('hidden')
+                    $final_stars.text(state.stars_string);
+                    $all_pages.addClass('hidden');
+                    $win_screen.removeClass('hidden')
                 }
             } else {
                 //no match found
@@ -96,12 +105,13 @@
     var init_game = function () {
 
         state = {
-            first : null, //{$card : , value : }
+            first: null, //{$card : , value : }
             move_tally: 0,
             pairs_found_tally: 0,
-            total_pairs : null,
+            total_pairs: null,
             timer: { time: 0, running: true },
             stars: 0,
+            stars_string: "",
             clicks_allowed: true
         };
 
@@ -109,8 +119,8 @@
         let deck = card_values.concat(card_values);
         state.total_pairs = deck.length / 2;
         //shuffle(deck);
-        
-       //clear the game grid and refill
+
+        //clear the game grid and refill
         $grid.find('*').remove();
         deck.forEach(function (value) {
             const $card_container = $('<div class="card-container"></div>');
@@ -132,8 +142,12 @@
         //install the resart button handler
         $restart_buttons.on('click', function () {
             init_game();
-            $('.page').addClass('hidden');
-            $('.game-screen.page').removeClass('hidden');
+            $all_pages.addClass('hidden');
+            $game_screen.removeClass('hidden');
+        });
+
+        $('.sample-card .card').on('click', function () {
+            $(this).toggleClass('flipped');
         });
 
         //install the timer function

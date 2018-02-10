@@ -11,6 +11,10 @@ body {
 	font-family: 'Changa One', cursive;
 }
 
+a {
+	color : #5f6e6c;
+}
+
 /*This contains the game screen and the win screen, only one is shown at a time*/
 .pairs-container {
     width: 95vmin;
@@ -34,6 +38,18 @@ body {
 	margin: 0;
 }
 
+.intro .sample-card {
+	width : 10vmin;
+	height : 10vmin;
+	margin-right: 1vmin;
+}
+
+.intro .cards {
+	display: flex;
+	justify-content: center;
+	margin: 2vmin 0 2vmin 0;
+}
+
 /*We need to explitly set this height for grid to be responsive*/
 .game-screen {
     width: 95vmin;
@@ -47,6 +63,9 @@ body {
 	margin:  0 auto;
 }
 
+.game-screen footer {
+	font-size: 0.85rem;
+}
 .grid {
 	margin : 0 auto;
 	display: grid;
