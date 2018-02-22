@@ -186,14 +186,12 @@ a {
 	animation-play-state: running;
 	animation-iteration-count: infinite;
 	animation-timing-function: ease-in;
-	top : -10vh;*/
-	/*transform: translateY(-600px);*/
+	top : -10vh;
 	z-index: -1;
 	opacity: 0.5;
 }
 
 .win-screen i:nth-of-type(2n) {
-	/* transform: translateX(30px); */
 	transform: rotateZ(30deg) scale(0.8);
 	animation-delay: 0.5s;
 	animation-duration: 4s;
@@ -201,28 +199,24 @@ a {
 }
 
 .win-screen i:nth-of-type(3n) {
-	/* transform: translateX(30px); */
 	transform: rotateZ(-60deg) scale(1.1);
 	animation-delay: 0.2s;
 	animation-duration: 5s;
 	background-image: url(img/b.svg);
 }
 .win-screen i:nth-of-type(4n) {
-	/* transform: translateX(30px); */
 	transform: rotateZ(-90deg) scale(0.7);
 	animation-delay: 0.9s;
 	animation-duration: 7s;
 	background-image: url(img/c.svg);
 }
 .win-screen i:nth-of-type(5n) {
-	/* transform: translateX(30px); */
 	transform: rotateZ(84deg) scale(0.8);
 	animation-delay: 0.8s;
 	animation-duration: 4s;
 	background-image: url(img/d.svg);
 }
 .win-screen i:nth-of-type(6n) {
-	/* transform: translateX(30px); */
 	transform: rotateZ(84deg) scale(1.2);
 	animation-delay: 0.8s;
 	animation-duration: 4s;
@@ -232,7 +226,6 @@ a {
 @keyframes falling {
 	from {
 			translate3d : (0,0,0);
-			/*transform: translate(0,0);*/
 	}
 
 	to {
