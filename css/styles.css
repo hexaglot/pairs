@@ -152,14 +152,14 @@ a {
 	fill: currentColor;
 }
 
-.card-a {background-image: url(img/a.svg);}
-.card-b {background-image: url(img/b.svg);}
-.card-c {background-image: url(img/c.svg);}
-.card-d {background-image: url(img/d.svg);}
-.card-e {background-image: url(img/e.svg);}
-.card-f {background-image: url(img/f.svg);}
-.card-g {background-image: url(img/g.svg);}
-.card-h {background-image: url(img/h.svg);}
+.card-a {background-image: url(../img/a.svg);}
+.card-b {background-image: url(../img/b.svg);}
+.card-c {background-image: url(../img/c.svg);}
+.card-d {background-image: url(../img/d.svg);}
+.card-e {background-image: url(../img/e.svg);}
+.card-f {background-image: url(../img/f.svg);}
+.card-g {background-image: url(../img/g.svg);}
+.card-h {background-image: url(../img/h.svg);}
 
 @keyframes flash {
 	to {
@@ -174,7 +174,7 @@ a {
 
 .win-screen i{
 	display: inline-block;
-	background-image: url(img/h.svg);
+	background-image: url(../img/h.svg);
 	position: relative;
 	animation-name: falling;
 	width : 50px;
@@ -195,32 +195,32 @@ a {
 	transform: rotateZ(30deg) scale(0.8);
 	animation-delay: 0.5s;
 	animation-duration: 4s;
-	background-image: url(img/a.svg);
+	background-image: url(../img/a.svg);
 }
 
 .win-screen i:nth-of-type(3n) {
 	transform: rotateZ(-60deg) scale(1.1);
 	animation-delay: 0.2s;
 	animation-duration: 5s;
-	background-image: url(img/b.svg);
+	background-image: url(../img/b.svg);
 }
 .win-screen i:nth-of-type(4n) {
 	transform: rotateZ(-90deg) scale(0.7);
 	animation-delay: 0.9s;
 	animation-duration: 7s;
-	background-image: url(img/c.svg);
+	background-image: url(../img/c.svg);
 }
 .win-screen i:nth-of-type(5n) {
 	transform: rotateZ(84deg) scale(0.8);
 	animation-delay: 0.8s;
 	animation-duration: 4s;
-	background-image: url(img/d.svg);
+	background-image: url(../img/d.svg);
 }
 .win-screen i:nth-of-type(6n) {
 	transform: rotateZ(84deg) scale(1.2);
 	animation-delay: 0.8s;
 	animation-duration: 4s;
-	background-image: url(img/f.svg);
+	background-image: url(../img/f.svg);
 }
 
 @keyframes falling {
