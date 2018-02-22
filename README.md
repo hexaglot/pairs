@@ -14,6 +14,9 @@ far. A bit more polish could be done on the intro and celebration screen - most
 of the groundwork is there but the actual font choices, colors and animations
 are actually quite dull and don't encourage the user to press start game.
 
+JQuery probably isnt needed - its only used to get element refeernces and add
+click handlers.
+
 The graphics were taken from "http://www.freepik.com" and given the attribution
 as asked for on that site.
 
