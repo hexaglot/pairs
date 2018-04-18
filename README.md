@@ -1,5 +1,6 @@
 # An implementation of the card game concentration.
 
+[Play the game here](https://hexaglot.github.io/pairs/)
 This is a simple game of concentration using jquery and css grid.
 
 ![screenshot](screenshot.png "Screenshot")
