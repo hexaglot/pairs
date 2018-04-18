@@ -2,6 +2,8 @@
 
 This is a simple game of concentration using jquery and css grid.
 
+![screenshot](screenshot.png "Screenshot")
+
 Using grid wasn't really needed in this case as a table would be just as good. I
 wanted to try using it though and eneded up keeping it in. I took a bit of care
 to add a few touches such as the (rather goofy) animations and stopping the user
